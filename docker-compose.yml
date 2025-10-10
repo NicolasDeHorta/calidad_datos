@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15
+    container_name: postgres_db
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: booksdb
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./L1-books.csv:/docker-entrypoint-initdb.d/L1-books.csv
+      - ./L2-books.csv:/docker-entrypoint-initdb.d/L2-books.csv
+      - ./L2-ratings.csv:/docker-entrypoint-initdb.d/L2-ratings.csv
+    ports:
+      - "5432:5432"
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
