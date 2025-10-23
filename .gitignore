@@ -1,1 +1,16 @@
 *.csv
+.DS_Store
+
+# Environments
+.env
+.envrc
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+.github/
+.python-version
+L1-books.zip
