@@ -10,7 +10,7 @@ services:
       POSTGRES_DB: booksdb
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
-      - ./L1-books.csv:/docker-entrypoint-initdb.d/L1-books.csv
+      - ./L1-books-reviewed.csv:/docker-entrypoint-initdb.d/L1-books-reviewed.csv
       - ./L2-books.csv:/docker-entrypoint-initdb.d/L2-books.csv
       - ./L2-ratings.csv:/docker-entrypoint-initdb.d/L2-ratings.csv
     ports:
