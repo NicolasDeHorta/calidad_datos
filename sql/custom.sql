@@ -372,3 +372,44 @@ INSERT INTO NL_Books (
 FROM l1_l2_matches LEFT JOIN l2_ratings_avg AS r ON l1_l2_matches.l2_isbn = r.isbn
 WHERE l2_id IS NOT NULL AND l1_id IS NULL;
 --233686 rows inserted
+
+
+-- add index to optimize join on isbn in l1_l2_matches
+CREATE INDEX idx_l1_l2_matches_l2_isbn ON l1_l2_matches(l2_isbn); 
+
+SELECT count(*) FROM l2_ratings_avg LEFT OUTER JOIN l1_l2_matches ON l2_ratings_avg.isbn = l1_l2_matches.l2_isbn
+WHERE l1_l2_matches.l2_isbn IS NULL;
+
+SELECT
+    isbn, NULL, NULL, NULL,
+    NULL, NULL, NULL, avg_rating
+FROM l2_ratings_avg 
+LEFT OUTER JOIN l1_l2_matches 
+ON l2_ratings_avg.isbn = l1_l2_matches.l2_isbn
+WHERE l1_l2_matches.l2_isbn IS NULL;
+
+
+--verifico que no haya nada de l1_l2_matches 
+SELECT
+    isbn, NULL, NULL, NULL,
+    NULL, NULL, NULL, avg_rating
+FROM l2_ratings_avg 
+LEFT OUTER JOIN l1_l2_matches 
+ON l2_ratings_avg.isbn = l1_l2_matches.l2_isbn
+WHERE l1_l2_matches.l2_isbn IS NULL;
+
+
+
+-- TODO
+--insertar en NL_Books los l2_ratings_avg que no esten en l1_l2_matches.l2_isbn
+INSERT INTO NL_Books (
+    isbn, title, description, authors,
+    publisher, publisheddate, categories, avg_rating
+)
+SELECT
+    isbn, NULL, NULL, NULL,
+    NULL, NULL, NULL, avg_rating
+FROM l2_ratings_avg 
+LEFT OUTER JOIN l1_l2_matches 
+ON l2_ratings_avg.isbn = l1_l2_matches.l2_isbn
+WHERE l1_l2_matches.l2_isbn IS NULL;
