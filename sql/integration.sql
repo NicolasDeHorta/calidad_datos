@@ -59,6 +59,7 @@ CREATE TABLE l1_l2_matches (
 
 SET pg_trgm.similarity_threshold = 0.9;
 
+-- exploracion de matches por titulo limpio y autor
 SELECT 
   l1.title AS l1_title,
   l2.book_title AS l2_title,
