@@ -14,3 +14,11 @@ venv.bak/
 .github/
 .python-version
 L1-books.zip
+
+!NL-books_part1.csv
+!NL-books_part2.csv
+
+*css/
+*images/
+*js/
+*.html
